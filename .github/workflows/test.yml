@@ -31,9 +31,10 @@ jobs:
       run: dotnet build 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-restore --configuration Release
 
     - name: Run tests with code coverage
+      id: test
       run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed"
 
     - name: Echo code coverage results
       run: |
-        COVERAGE=$(dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed" | grep -oP 'line-rate="\K[0-9.]+')
+        COVERAGE=$(echo "${{ steps.test.outputs.test_output }}" | grep -oP 'line-rate="\K[0-9.]+')
         echo "Code Coverage: $COVERAGE"
