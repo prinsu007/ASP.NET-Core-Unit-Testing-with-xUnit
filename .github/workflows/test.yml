@@ -25,13 +25,13 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore 'unit-testing-using-dotnet-test/unit-testing-using-dotnet-test.sln'
+      run: dotnet restore 'Tutorial 1 and 2/MyAppT/MyAppT.sln'
 
     - name: Build
-      run: dotnet build 'unit-testing-using-dotnet-test/unit-testing-using-dotnet-test.sln' --no-restore --configuration Release
+      run: dotnet build 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test 'unit-testing-using-dotnet-test/unit-testing-using-dotnet-test.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults
+      run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults
 
     - name: List TestResults directory
       run: ls -R ./TestResults
