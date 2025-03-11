@@ -30,13 +30,10 @@ jobs:
     - name: Build
       run: dotnet build 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-restore --configuration Release
 
-    - name: Run tests
-      run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults
-
-    - name: List TestResults directory
-      run: ls -R ./TestResults
+    - name: Run tests with code coverage
+      run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed"
 
     - name: Echo code coverage results
       run: |
-        COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' ./TestResults/**/coverage.cobertura.xml)
+        COVERAGE=$(dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed" | grep -oP 'line-rate="\K[0-9.]+')
         echo "Code Coverage: $COVERAGE"
