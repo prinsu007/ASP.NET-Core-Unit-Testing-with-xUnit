@@ -39,13 +39,13 @@ jobs:
         echo "Code Coverage: $COVERAGE"
 
     - name: Upload coverage report
-      uses: actions/upload-artifact@v4 # Updated to the latest version
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report
         path: ./TestResults
 
     - name: Code Coverage Summary
-      uses: irongut/CodeCoverageSummary@v1.0.1 # Updated to the correct version
+      uses: irongut/CodeCoverageSummary@v1.0.1
       with:
         filename: './TestResults/**/coverage.cobertura.xml'
         format: text
