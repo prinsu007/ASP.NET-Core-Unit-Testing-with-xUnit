@@ -31,10 +31,17 @@ jobs:
       run: dotnet build 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-restore --configuration Release
 
     - name: Run tests with code coverage
-      id: test
-      run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed"
+      run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults
 
-    - name: Echo code coverage results
-      run: |
-        COVERAGE=$(echo "${{ steps.test.outputs.test_output }}" | grep -oP 'line-rate="\K[0-9.]+')
-        echo "Code Coverage: $COVERAGE"
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report
+        path: ./TestResults
+
+    - name: Code Coverage Summary
+      uses: irongut/CodeCoverageSummary@v1.0.0
+      with:
+        filename: './TestResults/**/coverage.cobertura.xml'
+        format: text
+        output: console
