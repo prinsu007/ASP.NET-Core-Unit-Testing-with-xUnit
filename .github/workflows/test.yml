@@ -31,11 +31,11 @@ jobs:
       run: dotnet build 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-restore --configuration Release
 
     - name: Run tests with code coverage
-      run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed"
+      run: dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed" --results-directory ./TestResults
 
     - name: Echo code coverage results
       run: |
-        COVERAGE=$(dotnet test 'Tutorial 1 and 2/MyAppT/MyAppT.sln' --no-build --configuration Release --collect:"XPlat Code Coverage" --logger "console;verbosity=detailed" | grep -oP 'line-rate="\K[0-9.]+')
+        COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' ./TestResults/**/coverage.cobertura.xml)
         echo "Code Coverage: $COVERAGE"
 
     - name: Upload coverage report
